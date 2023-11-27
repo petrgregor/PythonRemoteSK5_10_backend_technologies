@@ -9,3 +9,8 @@ def hello(request):
 
 def hello2(request, s):
     return HttpResponse(f"Hello, {s} world!")
+
+
+def hello3(request):
+    s = request.GET.get('s', '')
+    return HttpResponse(f"Hello, {s} world!")

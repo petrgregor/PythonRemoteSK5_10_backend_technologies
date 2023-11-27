@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from viewer.views import hello, hello2
+from viewer.views import *
 
 # zde budeme vytvářet cesty
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello', hello),
     path('hello2/<s>', hello2),
+    path('hello3/', hello3),
 ]
