@@ -1,0 +1,53 @@
+# Filmová databáze
+
+## Databáze
+- Země
+  - název
+- Žánr
+  - název 
+- Filmy (Movie)
+  - Originální název filmu
+  - Český název filmu
+  - Slovenský název filmu
+  - země -> FK(Země)
+  - Žánr -> FK(Žánr)
+  - Režisér -> FK(Person)
+  - Herci -> seznam FK(Person)
+  - Rok premiéry
+  - hodnocení -> FK(Hodnocení)
+  - komentáře -> FK(Hodnocení)
+  - obrázky -> FK(Obrázky)
+  - video -> url odkaz na youtube na trailer
+  - popis
+- Hodnocení
+  - id filmu
+  - id uživatele
+  - hodnocení
+- Komentáře
+  - id filmu
+  - id uživatele
+  - komentář
+- Obrázky
+  - id filmu
+  - obrázek (název souboru/image ?)
+  - popis
+- Person
+  - Jméno
+  - Příjmení
+  - Rok narození
+  - informace
+
+## Funkce (views + templates)
+- zobrazit novinky (homepage)
+- zobrazit seznam všech filmů
+- filtrování filmů (seznam) 
+  - podle žánru
+  - podle hodnocení
+  - podle herce
+  - podle režiséra
+- zobrazit detail filmu
+- přihlášený uživatel může:
+  - hodnotit filmy
+  - komentovat filmy
+- admin může:
+  - přidat/editovat/smazat film/herce/režiséra/žánr/země/komentáře
