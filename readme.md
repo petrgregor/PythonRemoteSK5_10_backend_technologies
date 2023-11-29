@@ -22,7 +22,7 @@
 - Hodnocení
   - id filmu
   - id uživatele
-  - hodnocení
+  - hodnocení (hodnota 0-100 v %)
 - Komentáře
   - id filmu
   - id uživatele
@@ -34,7 +34,7 @@
 - Person
   - Jméno
   - Příjmení
-  - Rok narození
+  - Datum narození
   - informace
 
 ## Funkce (views + templates)
