@@ -17,7 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from viewer.models import *
 from viewer.views import *
+
+admin.site.register(Country)
+admin.site.register(Genre)
+admin.site.register(Movie)
+admin.site.register(Rating)
+admin.site.register(Comment)
+admin.site.register(Image)
+admin.site.register(Person)
 
 # zde budeme vytvářet cesty
 urlpatterns = [
