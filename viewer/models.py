@@ -36,6 +36,8 @@ class Person(Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+    # TODO: metoda pro výpočet věku
+
 
 class Movie(Model):
     title_orig = CharField(max_length=64, null=False, blank=False)
@@ -64,6 +66,8 @@ class Movie(Model):
         if self.year:
             title += f" ({self.year})"
         return title
+
+    # TODO: metoda pro výpočet průměrného hodnocení
 
 
 class Rating(Model):
