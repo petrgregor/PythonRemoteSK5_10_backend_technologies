@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import Model, CharField, IntegerField, TextField, DateField, ForeignKey, DO_NOTHING, \
-    ManyToManyField, SET_NULL
+    ManyToManyField, SET_NULL, DateTimeField
 from django.contrib.auth.models import User
 
 
@@ -27,6 +27,8 @@ class Person(Model):
     last_name = CharField(max_length=32, null=False, blank=False)
     birth_date = DateField(null=True, blank=True)
     biography = TextField(null=True, blank=True)
+    created = DateTimeField(auto_now_add=True)
+    updated = DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['last_name', 'first_name']
@@ -46,11 +48,22 @@ class Movie(Model):
     year = IntegerField(null=True, blank=True)
     video = CharField(max_length=128, null=True, blank=True)
     description = TextField(null=True, blank=True)
+    created = DateTimeField(auto_now_add=True)
+    updated = DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['title_orig']
 
     def __str__(self):
-        # TODO: pokud existuje český/slovenksý název, tak ho zobrazit, jinak originální + do závorky zobrazit rok)
+        # pokud existuje český/slovenský název, tak ho zobrazit, jinak originální + do závorky zobrazit rok)
         # Příklad: Forrest Gump (1994)
-        return f"{self.title_orig}"
+        if self.title_cz:
+            title = f"{self.title_cz}"
+        else:
+            title = f"{self.title_orig}"
+        if self.year:
+            title += f" ({self.year})"
+        return title
 
 
 class Rating(Model):
@@ -58,15 +71,19 @@ class Rating(Model):
     user = ForeignKey(User, null=True, on_delete=SET_NULL)
     rating = IntegerField(null=False, blank=False)
 
-    # TODO: definovat __str__
+    def __str__(self):
+        return f"{self.movie}: {self.rating} by {self.user}"
 
 
 class Comment(Model):
     movie = ForeignKey(Movie, on_delete=DO_NOTHING, null=False, blank=False)
     user = ForeignKey(User, null=True, on_delete=SET_NULL)
     comment = TextField(null=False, blank=False)
+    created = DateTimeField(auto_now_add=True)
+    updated = DateTimeField(auto_now=True)
 
-    # TODO: definovat __str__
+    def __str__(self):
+        return f"{self.movie} ({self.user}): {self.comment[:50]}"
 
 
 class Image(Model):
@@ -74,5 +91,5 @@ class Image(Model):
     url = CharField(max_length=128, null=False, blank=False)
     description = TextField()
 
-    # TODO: definovat __str__
-
+    def __str__(self):
+        return f"{self.movie}: {self.description[:50]}"
