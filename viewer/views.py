@@ -46,3 +46,15 @@ def movie(request, pk):
     movie_obj = Movie.objects.get(id=pk)
     context = {'movie': movie_obj}
     return render(request, 'movie.html', context)
+
+
+def persons(request):
+    persons_list = Person.objects.all()
+    context = {'persons': persons_list}
+    return render(request, 'persons.html', context)
+
+
+def person(request, pk):
+    person_obj = Person.objects.get(id=pk)
+    context = {'person': person_obj}
+    return render(request, 'person.html', context)

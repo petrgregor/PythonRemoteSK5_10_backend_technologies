@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Seznam lidí</h1>
+<ul>
+    {% for person in persons %}
+        <li><a href="{% url 'person' person.id %}">{{ person }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

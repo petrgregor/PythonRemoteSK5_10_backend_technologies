@@ -22,13 +22,13 @@
 
     <div class="movie-directors">Režie:
         {% for director in movie.directors.all %}
-            <span class="movie-director">{{ director }}</span>
+            <span class="movie-director"><a href="{% url 'person' director.id %}">{{ director }}</a></span>
         {% endfor %}
     </div>
 
     <div class="movie-actors">Hrají:
         {% for actor in movie.actors.all %}
-            <span class="movie-actor">{{ actor }}</span>
+            <span class="movie-actor"><a href="{% url 'person' actor.id %}">{{ actor }}</a></span>
         {% empty %}
             Nikdo nehraje.
         {% endfor %}
