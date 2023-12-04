@@ -38,5 +38,6 @@ urlpatterns = [
     path('hello4/', hello4),
     path('hello5/<s0>', hello5),
 
+    path('', index, name='index'),
     path('movies/', movies, name='movies'),
 ]

@@ -32,6 +32,10 @@ def hello5(request, s0):
     )
 
 
+def index(request):
+    return render(request, 'index.html')
+
+
 def movies(request):
     movies_list = Movie.objects.all()
     context = {'movies': movies_list}

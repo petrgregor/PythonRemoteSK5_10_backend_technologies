@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'viewer/styless.css' %}">
+</head>
+<body>
+    <header class="headContainer">
+        <img class="headContainer-part" alt="Yoda1" src="{% static 'viewer/images/HD-wallpaper-jedi-yoda-star-wars-lightsbar-black-background-dark-theme.jpg' %}">
+        <a href="index.html"  class="headContainer-center"><h1>Endless Movie database</h1></a>
+        <img class="headContainer-part" alt="Yoda2" src="{% static 'viewer/images/wp7248743.webp' %}">
+    </header>
+    <nav class="navContainer">
+        <button>Register</button>
+        <button>Login</button>
+    </nav>
+    <nav class="navContainer2">
+        <a href="News.html"><button>News in Cinemas</button></a>
+        <a href="NewsOnDVD.html"><button>News on DVD</button></a>
+        <a href="{% url 'movies' %}"><button>Movies</button></a>
+        <button>TV Recommendation</button>
+        <button>Actor rankings</button>
+        <button>Awards</button>
+        <button>Users</button>
+        <button>Movie Shop</button>
+        <button>Merchandise Store</button>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>Copyright Created by Marcel Jurčák 2.12.2023</footer>
+    <script src="{% static 'viewer/script.js' %} "></script>
+</body>
+</html>
