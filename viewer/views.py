@@ -40,3 +40,9 @@ def movies(request):
     movies_list = Movie.objects.all()
     context = {'movies': movies_list}
     return render(request, 'movies.html', context)
+
+
+def movie(request, pk):
+    movie_obj = Movie.objects.get(id=pk)
+    context = {'movie': movie_obj}
+    return render(request, 'movie.html', context)

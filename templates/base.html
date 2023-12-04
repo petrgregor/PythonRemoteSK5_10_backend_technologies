@@ -10,7 +10,7 @@
 <body>
     <header class="headContainer">
         <img class="headContainer-part" alt="Yoda1" src="{% static 'viewer/images/HD-wallpaper-jedi-yoda-star-wars-lightsbar-black-background-dark-theme.jpg' %}">
-        <a href="index.html"  class="headContainer-center"><h1>Endless Movie database</h1></a>
+        <a href="{% url 'index' %}"  class="headContainer-center"><h1>Endless Movie database</h1></a>
         <img class="headContainer-part" alt="Yoda2" src="{% static 'viewer/images/wp7248743.webp' %}">
     </header>
     <nav class="navContainer">

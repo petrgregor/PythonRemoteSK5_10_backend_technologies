@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ movie.title_orig }}</h1>
+<div class="movie-details">
+    <div class="movie-title-orig">Originální název: {{ movie.title_orig }}</div>
+    <div class="movie-title-cz">Český název: {{ movie.title_cz }}</div>
+    <div class="movie-description">Popis: {{ movie.description }}</div>
+</div>
+{% endblock %}
