@@ -5,6 +5,37 @@
 <div class="movie-details">
     <div class="movie-title-orig">Originální název: {{ movie.title_orig }}</div>
     <div class="movie-title-cz">Český název: {{ movie.title_cz }}</div>
+    <div class="movie-title-sk">Slovenský název: {{ movie.title_sk }}</div>
+    <div class="movie-year">Rok: {{ movie.year }}</div>
+
+    <div class="movie-countries">Země:
+        {% for country in movie.countries.all %}
+            {{ country }}
+        {% endfor %}
+    </div>
+
+    <div class="movie-genres">Žánry:
+        {% for genre in movie.genres.all %}
+            {{ genre }}
+        {% endfor %}
+    </div>
+
+    <div class="movie-directors">Režie:
+        {% for director in movie.directors.all %}
+            <span class="movie-director">{{ director }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="movie-actors">Hrají:
+        {% for actor in movie.actors.all %}
+            <span class="movie-actor">{{ actor }}</span>
+        {% empty %}
+            Nikdo nehraje.
+        {% endfor %}
+    </span>
+
     <div class="movie-description">Popis: {{ movie.description }}</div>
+    <div class="movie-video"><a href="{{ movie.video }}">Video</a></div>
+
 </div>
 {% endblock %}
