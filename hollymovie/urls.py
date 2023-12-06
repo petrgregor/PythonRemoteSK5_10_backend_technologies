@@ -39,8 +39,12 @@ urlpatterns = [
     path('hello5/<s0>', hello5),
 
     path('', index, name='index'),
-    path('movies/', movies, name='movies'),
+    #path('movies/', movies, name='movies'),
+    #path('movies/', MoviesView.as_view(), name='movies'),
+    #path('movies/', MoviesTemplateView.as_view(), name='movies'),
+    path('movies/', MoviesListView.as_view(), name='movies'),
     path('movie/<pk>/', movie, name='movie'),
-    path('persons/', persons, name='persons'),
+    #path('persons/', persons, name='persons'),
+    path('persons/', PersonsListView.as_view(), name='persons'),
     path('person/<pk>/', person, name='person'),  # FIXME
 ]
