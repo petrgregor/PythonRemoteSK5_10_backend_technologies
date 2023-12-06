@@ -43,6 +43,7 @@ urlpatterns = [
     #path('movies/', MoviesView.as_view(), name='movies'),
     #path('movies/', MoviesTemplateView.as_view(), name='movies'),
     path('movies/', MoviesListView.as_view(), name='movies'),
+    path('movie/create/', MovieCreateView.as_view(), name='movie_create'),
     path('movie/<pk>/', movie, name='movie'),
     #path('persons/', persons, name='persons'),
     path('persons/', PersonsListView.as_view(), name='persons'),
