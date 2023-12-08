@@ -39,12 +39,24 @@ urlpatterns = [
     path('hello5/<s0>', hello5),
 
     path('', index, name='index'),
+
+    path('country/create/', CountryCreateView.as_view(), name='country_create'),
+    path('country/update/<pk>/', CountryUpdateView.as_view(), name='country_update'),
+    path('country/delete/<pk>/', CountryDeleteView.as_view(), name='country_delete'),
+
+    path('genre/create/', GenreCreateView.as_view(), name='genre_create'),
+    path('genre/update/<pk>/', GenreUpdateView.as_view(), name='genre_update'),
+    path('genre/delete/<pk>/', GenreDeleteView.as_view(), name='genre_delete'),
+
     #path('movies/', movies, name='movies'),
     #path('movies/', MoviesView.as_view(), name='movies'),
     #path('movies/', MoviesTemplateView.as_view(), name='movies'),
     path('movies/', MoviesListView.as_view(), name='movies'),
     path('movie/create/', MovieCreateView.as_view(), name='movie_create'),
+    path('movie/update/<pk>/', MovieUpdateView.as_view(), name='movie_update'),
+    path('movie/delete/<pk>/', MovieDeleteView.as_view(), name='movie_delete'),
     path('movie/<pk>/', movie, name='movie'),
+
     #path('persons/', persons, name='persons'),
     path('persons/', PersonsListView.as_view(), name='persons'),
     #path('person/create/', PersonFormView.as_view(), name='person_create'),

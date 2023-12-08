@@ -36,6 +36,8 @@
 
     <div class="movie-description">Popis: {{ movie.description }}</div>
     <div class="movie-video"><a href="{{ movie.video }}">Video</a></div>
+    <a href="{% url 'movie_update' movie.id %}"><button>Upravit</button></a>
+    <a href="{% url 'movie_delete' movie.id %}"><button>Smazat</button></a>
 
 </div>
 {% endblock %}

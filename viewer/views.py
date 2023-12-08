@@ -44,6 +44,68 @@ def index(request):
     return render(request, 'index.html')
 
 
+class GenreModelForm(ModelForm):
+
+    class Meta:
+        model = Genre
+        fields = '__all__'
+
+    def clean_name(self):
+        cleaned_data = super().clean()
+        name = cleaned_data['name'].strip().capitalize()
+        return name
+
+
+class GenreCreateView(CreateView):
+    template_name = 'movie_create.html'  # TODO genre_create.html
+    form_class = GenreModelForm
+    success_url = reverse_lazy('index')
+
+
+class GenreUpdateView(UpdateView):
+    template_name = 'genre_create.html'
+    model = Genre
+    form_class = GenreModelForm
+    success_url = reverse_lazy('index')
+
+
+class GenreDeleteView(DeleteView):
+    template_name = 'person_confirm_delete.html'  # TODO genre_confirm_delete.html
+    model = Genre
+    success_url = reverse_lazy('index')
+
+
+class CountryModelForm(ModelForm):
+
+    class Meta:
+        model = Country
+        fields = '__all__'
+
+    def clean_name(self):
+        cleaned_data = super().clean()
+        name = cleaned_data['name'].strip().capitalize()
+        return name
+
+
+class CountryCreateView(CreateView):
+    template_name = 'movie_create.html'  # TODO country_create.html
+    form_class = CountryModelForm
+    success_url = reverse_lazy('index')
+
+
+class CountryUpdateView(UpdateView):
+    template_name = 'country_create.html'
+    model = Country
+    form_class = CountryModelForm
+    success_url = reverse_lazy('index')
+
+
+class CountryDeleteView(DeleteView):
+    template_name = 'person_confirm_delete.html'  # TODO country_confirm_delete.html
+    model = Country
+    success_url = reverse_lazy('index')
+
+
 def movies(request):
     movies_list = Movie.objects.all()
     context = {'movies': movies_list}
@@ -94,7 +156,22 @@ class MovieForm(Form):
         return super().clean()
 
 
-class MovieCreateView(FormView):
+class MovieModelForm(ModelForm):
+
+    class Meta:
+        model = Movie
+        fields = '__all__'
+
+    def clean_title_orig(self):
+        initial_form = super().clean()
+        initial = initial_form['title_orig'].strip()
+        return initial.capitalize()
+
+    def clean(self):
+        return super().clean()
+
+
+class MovieFormView(FormView):
     template_name = 'movie_create.html'
     form_class = MovieForm
     success_url = reverse_lazy('movie_create')
@@ -125,6 +202,25 @@ class MovieCreateView(FormView):
         print('User provided invalid data.')
         LOGGER.warning('User provided invalid data.')
         return super().form_invalid(form)
+
+
+class MovieCreateView(CreateView):
+    template_name = 'movie_create.html'
+    form_class = MovieModelForm
+    success_url = reverse_lazy('movies')
+
+
+class MovieUpdateView(UpdateView):
+    template_name = 'movie_create.html'
+    model = Movie
+    form_class = MovieModelForm
+    success_url = reverse_lazy('movies')
+
+
+class MovieDeleteView(DeleteView):
+    template_name = 'person_confirm_delete.html'  # TODO movie_confirm_delete.html
+    model = Movie
+    success_url = reverse_lazy('movies')
 
 
 def persons(request):

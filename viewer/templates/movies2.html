@@ -7,4 +7,5 @@
         <li><a href="{% url 'movie' movie.id %}">{{ movie }}</a></li>
     {% endfor %}
 </ul>
+<a href="{% url 'movie_create' %}"><button>Přidat film</button></a>
 {% endblock %}

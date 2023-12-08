@@ -18,6 +18,9 @@ class Country(Model):
 class Genre(Model):
     name = CharField(max_length=32, null=False, blank=False)  # CharField => VARCHAR
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
         return f"{self.name}"
 
