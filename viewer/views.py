@@ -4,11 +4,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, ListView, FormView
+from django.views.generic import TemplateView, ListView, FormView, CreateView, UpdateView, DeleteView
 
 from viewer.models import *
 from django.forms import Form, ModelChoiceField, Textarea, IntegerField, CharField, ModelMultipleChoiceField, \
-    CheckboxSelectMultiple
+    CheckboxSelectMultiple, ModelForm, DateField, SelectDateWidget, DateInput
 
 LOGGER = getLogger()
 
@@ -99,8 +99,7 @@ class MovieCreateView(FormView):
     form_class = MovieForm
     success_url = reverse_lazy('movie_create')
 
-    def from_valid(self, form):  # FIXME
-        print('Form valid.')
+    def form_valid(self, form):
         result = super().form_valid(form)
         cleaned_data = form.cleaned_data
         new_movie = Movie.objects.create(
@@ -109,7 +108,7 @@ class MovieCreateView(FormView):
             title_sk=cleaned_data['title_sk'],
             #countries=cleaned_data['countries'],
             #genres=cleaned_data['genres'],
-            #directors=cleaned_data['directors'],  # TODO
+            #directors=cleaned_data['directors'],
             #actors=cleaned_data['actors'],
             year=cleaned_data['year'],
             video=cleaned_data['video'],
@@ -165,12 +164,41 @@ class PersonForm(Form):
         return initial.capitalize()
 
 
-class PersonCreateView(FormView):
+class PersonModelForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['birth_date'].widget = DateInput(
+            attrs={
+                'type': 'date',
+                'placeholder': 'dd-mm-yyyy',
+                'class': 'form-control'
+            }
+        )
+
+    class Meta:
+        model = Person
+        fields = '__all__'  # ve formuláři budou všechny atributy
+        #fields = ['last_name', 'first_name']  # ve formuláři se zobrazí pouze tyto atributy (v daném pořadí)
+        #exclude = ['biography']  # ve formuláři budou všechny atributy kromě těchto
+
+    def clean_first_name(self):
+        initial_data = super().clean()
+        initial = initial_data['first_name']
+        return initial.capitalize()
+
+    def clean_last_name(self):
+        initial_data = super().clean()
+        initial = initial_data['last_name']
+        return initial.capitalize()
+
+
+class PersonFormView(FormView):
     template_name = 'person_create.html'
-    form_class = PersonForm
+    form_class = PersonModelForm
     success_url = reverse_lazy('person_create')
 
-    def from_valid(self, form):
+    def form_valid(self, form):
         result = super().form_valid(form)
         cleaned_data = form.cleaned_data
         Person.objects.create(
@@ -186,3 +214,29 @@ class PersonCreateView(FormView):
         LOGGER.warning('User provided invalid data.')
         return super().form_invalid(form)
 
+
+class PersonCreateView(CreateView):
+    template_name = 'person_create.html'
+    form_class = PersonModelForm
+    success_url = reverse_lazy('person_create')
+
+    def form_invalid(self, form):
+        LOGGER.warning('User provided invalid data.')
+        return super().form_invalid(form)
+
+
+class PersonUpdateView(UpdateView):
+    template_name = 'person_create.html'
+    model = Person
+    form_class = PersonModelForm
+    success_url = reverse_lazy('persons')
+
+    def form_invalid(self, form):
+        LOGGER.warning('User provided invalid data.')
+        return super().form_invalid(form)
+
+
+class PersonDeleteView(DeleteView):
+    template_name = 'person_confirm_delete.html'
+    model = Person
+    success_url = reverse_lazy('persons')

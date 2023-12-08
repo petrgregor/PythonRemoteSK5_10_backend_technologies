@@ -21,5 +21,7 @@
         {% endfor %}
     </div>
     <div class="person-biography">Biografie: {{ person.biography }}</div>
+    <a href="{% url 'person_update' person.id %}"><button>Upravit</button></a>
+    <a href="{% url 'person_delete' person.id %}"><button>Smazat</button></a>
 </div>
 {% endblock %}
