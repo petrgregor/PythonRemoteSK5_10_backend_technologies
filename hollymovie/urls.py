@@ -47,5 +47,6 @@ urlpatterns = [
     path('movie/<pk>/', movie, name='movie'),
     #path('persons/', persons, name='persons'),
     path('persons/', PersonsListView.as_view(), name='persons'),
+    path('person/create/', PersonCreateView.as_view(), name='person_create'),
     path('person/<pk>/', person, name='person'),  # FIXME
 ]
