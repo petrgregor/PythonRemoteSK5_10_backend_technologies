@@ -1,28 +1,28 @@
 # Filmová databáze
 
 ## Databáze
-- Země
-  - název
-- Žánr
-  - název 
+- [x] Země
+  - [x] název
+- [x] Žánr
+  - [x] název 
 - Filmy (Movie)
-  - Originální název filmu
-  - Český název filmu
-  - Slovenský název filmu
-  - země -> FK(Země)
-  - Žánr -> FK(Žánr)
-  - Režisér -> FK(Person)
-  - Herci -> seznam FK(Person)
-  - Rok premiéry
-  - hodnocení -> FK(Hodnocení)
+  - [x] Originální název filmu
+  - [x] Český název filmu
+  - [x] Slovenský název filmu
+  - [x] země -> ManyToMany(Země)
+  - [x] Žánr -> ManyToMany(Žánr)
+  - [x] Režisér -> ManyToMany(Person)
+  - [x] Herci -> ManyToMany(Person)
+  - [x] Rok premiéry
+  - [x] hodnocení -> FK(Hodnocení)
   - komentáře -> FK(Hodnocení)
   - obrázky -> FK(Obrázky)
-  - video -> url odkaz na youtube na trailer
-  - popis
-- Hodnocení
-  - id filmu
-  - id uživatele
-  - hodnocení (hodnota 0-100 v %)
+  - [x] video -> url odkaz na youtube na trailer
+  - [x] popis
+- [x] Hodnocení
+  - [x] id filmu
+  - [x] id uživatele
+  - [x] hodnocení (hodnota 0-100 v %)
 - Komentáře
   - id filmu
   - id uživatele
@@ -31,23 +31,23 @@
   - id filmu
   - obrázek (název souboru/image ?)
   - popis
-- Person
-  - Jméno
-  - Příjmení
-  - Datum narození
-  - informace
+- [x] Person
+  - [x] Jméno
+  - [x] Příjmení
+  - [x] Datum narození
+  - [x] informace
 
 ## Funkce (views + templates)
 - zobrazit novinky (homepage)
-- zobrazit seznam všech filmů
+- [x] zobrazit seznam všech filmů
 - filtrování filmů (seznam) 
   - podle žánru
   - podle hodnocení
-  - podle herce
-  - podle režiséra
-- zobrazit detail filmu
+  - [x] podle herce
+  - [x] podle režiséra
+- [x] zobrazit detail filmu
 - přihlášený uživatel může:
-  - hodnotit filmy
+  - [x] hodnotit filmy
   - komentovat filmy
 - admin může:
   - přidat/editovat/smazat film/herce/režiséra/žánr/země/komentáře

@@ -1,7 +1,8 @@
 from logging import getLogger
 
+from django.db.models import Avg
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, FormView, CreateView, UpdateView, DeleteView
@@ -179,7 +180,23 @@ class MoviesListView(ListView):
 
 def movie(request, pk):
     movie_obj = Movie.objects.get(id=pk)
-    context = {'movie': movie_obj}
+
+    # spočítat průměrné hodnocení filmu
+    avg_rating = None
+    if Rating.objects.filter(movie=movie_obj).count() > 0:
+        avg_rating = Rating.objects.filter(movie=movie_obj).aggregate(Avg('rating'))
+
+    # hodnocení od daného uživatele
+    user = request.user
+    user_rating = None
+    if request.user.is_authenticated:
+        if Rating.objects.filter(movie=movie_obj, user=user).count() > 0:
+            user_rating = Rating.objects.get(movie=movie_obj, user=user)
+
+    # TODO: komentáře k filmu
+
+    context = {'movie': movie_obj, 'avg_rating': avg_rating,
+               'user_rating': user_rating}
     return render(request, 'movie.html', context)
 
 
@@ -396,3 +413,29 @@ class PersonDeleteView(DeleteView):
     template_name = 'person_confirm_delete.html'
     model = Person
     success_url = reverse_lazy('persons')
+
+
+def rate_movie(request):
+    user = request.user
+    if request.method == 'POST':
+        movie_id = request.POST.get('movie_id')
+        movie_obj = Movie.objects.get(id=movie_id)
+        rating = request.POST.get('rating')
+
+        if Rating.objects.filter(movie=movie_obj, user=user).count() > 0:
+            # aktualizujeme hodnocení
+            user_rating = Rating.objects.get(movie=movie_obj, user=user)
+            user_rating.rating = rating
+            user_rating.save()
+        else:
+            Rating.objects.create(
+                movie=movie_obj,
+                user=user,
+                rating=rating
+            )
+    return redirect(f"/movie/{movie_id}/")
+
+
+# TODO: view pro přidávání komentářů
+def add_comment(request):
+    pass

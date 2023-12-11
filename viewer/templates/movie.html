@@ -20,13 +20,13 @@
         {% endfor %}
     </div>
 
-    <div class="movie-directors">Režie:
+    <span class="movie-directors">Režie:
         {% for director in movie.directors.all %}
             <span class="movie-director"><a href="{% url 'person' director.id %}">{{ director }}</a></span>
         {% endfor %}
-    </div>
+    </span>
 
-    <div class="movie-actors">Hrají:
+    <span class="movie-actors">Hrají:
         {% for actor in movie.actors.all %}
             <span class="movie-actor"><a href="{% url 'person' actor.id %}">{{ actor }}</a></span>
         {% empty %}
@@ -36,8 +36,28 @@
 
     <div class="movie-description">Popis: {{ movie.description }}</div>
     <div class="movie-video"><a href="{{ movie.video }}">Video</a></div>
-    <a href="{% url 'movie_update' movie.id %}"><button>Upravit</button></a>
-    <a href="{% url 'movie_delete' movie.id %}"><button>Smazat</button></a>
+    <div class="movie-avg-rating">Průměrné hodnocení:
+        {% if avg_rating %}
+            {{ avg_rating.rating__avg }}
+        {% else %}
+            Dosud nehodnoceno
+        {% endif %}
+    </div>
+    {% if request.user.is_authenticated %}
+        {% if user_rating %}
+            Vaše hodnocení je: {{ user_rating.rating }}
+        {% endif %}
+        <form method="post" action="{% url 'rate_movie' %}">
+            {% csrf_token %}
+            <label for="rating">Hodnocení filmu (0-100):</label>
+            <input type="number" id="rating" name="rating" min="0" max="100">
+            <input type="hidden" name="movie_id" value="{{ movie.id }}">
+            <input type="submit">
+        </form>
+
+        <a href="{% url 'movie_update' movie.id %}"><button>Upravit</button></a>
+        <a href="{% url 'movie_delete' movie.id %}"><button>Smazat</button></a>
+    {% endif %}
 
 </div>
 {% endblock %}

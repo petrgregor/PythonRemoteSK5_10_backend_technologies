@@ -15,8 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.contrib.auth.views import LoginView
+from django.urls import path, include
 
+from accounts.views import SignUpView
 from viewer.models import *
 from viewer.views import *
 
@@ -29,6 +31,8 @@ admin.site.register(Image)
 admin.site.register(Person)
 
 # zde budeme vytvářet cesty
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -39,6 +43,10 @@ urlpatterns = [
     path('hello5/<s0>', hello5),
 
     path('', index, name='index'),
+
+    path('accounts/login/', LoginView.as_view(), name='login'),    # vlastní view
+    path('accounts/signup/', SignUpView.as_view(), name='signup'),  # vlastní view
+    path('accounts/', include('django.contrib.auth.urls')),      # defaultní views pro přihlašování/odhlašování/změnu hesla...
 
     path('country/create/', CountryCreateView.as_view(), name='country_create'),
     path('country/update/<pk>/', CountryUpdateView.as_view(), name='country_update'),
@@ -65,4 +73,6 @@ urlpatterns = [
     path('person/update/<pk>/', PersonUpdateView.as_view(), name='person_update'),
     path('person/delete/<pk>/', PersonDeleteView.as_view(), name='person_delete'),
     path('person/<pk>/', person, name='person'),  # FIXME
+
+    path('rate_movie/', rate_movie, name='rate_movie'),
 ]
