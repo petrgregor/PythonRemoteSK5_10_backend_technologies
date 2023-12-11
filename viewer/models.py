@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 from django.db.models import Model, CharField, IntegerField, TextField, DateField, ForeignKey, DO_NOTHING, \
     ManyToManyField, SET_NULL, DateTimeField
@@ -40,6 +42,12 @@ class Person(Model):
         return f"{self.first_name} {self.last_name}"
 
     # TODO: metoda pro výpočet věku
+    def calculate_age(self):
+        if self.birth_date:
+            today = date.today()
+            return (today.year - self.birth_date.year -
+                    ((today.month, today.day) < (self.birth_date.month, self.birth_date.day)))
+        return None
 
 
 class Movie(Model):
