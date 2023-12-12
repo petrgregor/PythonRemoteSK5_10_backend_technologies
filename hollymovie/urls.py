@@ -75,4 +75,5 @@ urlpatterns = [
     path('person/<pk>/', person, name='person'),  # FIXME
 
     path('rate_movie/', rate_movie, name='rate_movie'),
+    path('add_comment', add_comment, name='add_comment'),
 ]

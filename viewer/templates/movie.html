@@ -59,5 +59,27 @@
         <a href="{% url 'movie_delete' movie.id %}"><button>Smazat</button></a>
     {% endif %}
 
+    {% if request.user.is_authenticated %}
+    <form action="{% url 'add_comment' %}" method="post">
+        {% csrf_token %}
+        <label for="rating">Pridat komentar:</label>
+        <div>
+            <textarea name="comment" cols="100" rows="5"></textarea>
+        </div>
+        <input type="hidden" name="movie_id" value="{{ movie.id }}">
+        <input type="submit" value="Odoslat komentar">
+    </form>
+    {% endif %}
+
+    <h3>Kommentare k filmu:</h3>
+    {% for comment in comments %}
+        <p>
+        {{ comment.comment }}
+        <h6><strong>{{ comment.user }}</strong></h6>
+         <h6>{{ comment.created }}</h6>
+        </p>
+        <hr>
+    {% endfor %}
+
 </div>
 {% endblock %}

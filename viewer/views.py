@@ -194,9 +194,10 @@ def movie(request, pk):
             user_rating = Rating.objects.get(movie=movie_obj, user=user)
 
     # TODO: komentáře k filmu
+    comments = Comment.objects.filter(movie=movie_obj).order_by('-created')
 
     context = {'movie': movie_obj, 'avg_rating': avg_rating,
-               'user_rating': user_rating}
+               'user_rating': user_rating, 'comments': comments}
     return render(request, 'movie.html', context)
 
 
@@ -422,20 +423,34 @@ def rate_movie(request):
         movie_obj = Movie.objects.get(id=movie_id)
         rating = request.POST.get('rating')
 
-        if Rating.objects.filter(movie=movie_obj, user=user).count() > 0:
-            # aktualizujeme hodnocení
-            user_rating = Rating.objects.get(movie=movie_obj, user=user)
-            user_rating.rating = rating
-            user_rating.save()
-        else:
-            Rating.objects.create(
-                movie=movie_obj,
-                user=user,
-                rating=rating
-            )
+        if rating:
+            if Rating.objects.filter(movie=movie_obj, user=user).count() > 0:
+                # aktualizujeme hodnocení
+                user_rating = Rating.objects.get(movie=movie_obj, user=user)
+                user_rating.rating = rating
+                user_rating.save()
+            else:
+                Rating.objects.create(
+                    movie=movie_obj,
+                    user=user,
+                    rating=rating
+                )
+        #else:
+        #    return redirect(f"/movie/{movie_id}/")
     return redirect(f"/movie/{movie_id}/")
 
 
 # TODO: view pro přidávání komentářů
 def add_comment(request):
-    pass
+    user = request.user
+    if request.method == 'POST':
+        movie_id = request.POST.get('movie_id')
+        movie_obj = Movie.objects.get(id=movie_id)
+        comment = request.POST.get('comment').strip()
+        if comment:
+            Comment.objects.create(
+                movie=movie_obj,
+                user=user,
+                comment=comment
+            )
+    return redirect(f"/movie/{movie_id}")
