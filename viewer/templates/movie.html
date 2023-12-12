@@ -59,8 +59,12 @@
             <input type="submit">
         </form>
 
-        <a href="{% url 'movie_update' movie.id %}"><button>Upravit</button></a>
-        <a href="{% url 'movie_delete' movie.id %}"><button>Smazat</button></a>
+        {% if perms.viewer.change_movie %}
+            <a href="{% url 'movie_update' movie.id %}"><button>Upravit</button></a>
+        {% endif %}
+        {% if perms.viewer.delete_movie %}
+            <a href="{% url 'movie_delete' movie.id %}"><button>Smazat</button></a>
+        {% endif %}
     {% endif %}
 
     {% if request.user.is_authenticated %}

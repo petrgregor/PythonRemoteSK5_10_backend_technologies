@@ -21,8 +21,10 @@
         {% endfor %}
     </div>
     <div class="person-biography">Biografie: {{ person.biography }}</div>
-    {% if request.user.is_authenticated %}
+    {% if perms.viewer.change_person %}
         <a href="{% url 'person_update' person.id %}"><button>Upravit</button></a>
+    {% endif %}
+    {% if perms.viewer.delete_person %}
         <a href="{% url 'person_delete' person.id %}"><button>Smazat</button></a>
     {% endif %}
 </div>

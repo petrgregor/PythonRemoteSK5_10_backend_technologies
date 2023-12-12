@@ -1,5 +1,7 @@
 from logging import getLogger
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Avg
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -12,6 +14,7 @@ from django.forms import Form, ModelChoiceField, Textarea, IntegerField, CharFie
     CheckboxSelectMultiple, ModelForm, DateField, SelectDateWidget, DateInput
 
 LOGGER = getLogger()
+
 
 # Create your views here.
 def hello(request):
@@ -57,20 +60,20 @@ class GenreModelForm(ModelForm):
         return name
 
 
-class GenreCreateView(CreateView):
+class GenreCreateView(LoginRequiredMixin, CreateView):
     template_name = 'movie_create.html'  # TODO genre_create.html
     form_class = GenreModelForm
     success_url = reverse_lazy('index')
 
 
-class GenreUpdateView(UpdateView):
+class GenreUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'genre_create.html'
     model = Genre
     form_class = GenreModelForm
     success_url = reverse_lazy('index')
 
 
-class GenreDeleteView(DeleteView):
+class GenreDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'person_confirm_delete.html'  # TODO genre_confirm_delete.html
     model = Genre
     success_url = reverse_lazy('index')
@@ -88,20 +91,20 @@ class CountryModelForm(ModelForm):
         return name
 
 
-class CountryCreateView(CreateView):
+class CountryCreateView(LoginRequiredMixin, CreateView):
     template_name = 'movie_create.html'  # TODO country_create.html
     form_class = CountryModelForm
     success_url = reverse_lazy('index')
 
 
-class CountryUpdateView(UpdateView):
+class CountryUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'country_create.html'
     model = Country
     form_class = CountryModelForm
     success_url = reverse_lazy('index')
 
 
-class CountryDeleteView(DeleteView):
+class CountryDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'person_confirm_delete.html'  # TODO country_confirm_delete.html
     model = Country
     success_url = reverse_lazy('index')
@@ -222,7 +225,7 @@ class MovieForm(Form):
         return super().clean()
 
 
-class MovieModelForm(ModelForm):
+class MovieModelForm(LoginRequiredMixin, ModelForm):
 
     class Meta:
         model = Movie
@@ -237,7 +240,7 @@ class MovieModelForm(ModelForm):
         return super().clean()
 
 
-class MovieFormView(FormView):
+class MovieFormView(LoginRequiredMixin, FormView):
     template_name = 'movie_create.html'
     form_class = MovieForm
     success_url = reverse_lazy('movie_create')
@@ -270,25 +273,29 @@ class MovieFormView(FormView):
         return super().form_invalid(form)
 
 
-class MovieCreateView(CreateView):
+class MovieCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'movie_create.html'
     form_class = MovieModelForm
     success_url = reverse_lazy('movies')
+    permission_required = 'viewer.add_movie'
 
 
-class MovieUpdateView(UpdateView):
+class MovieUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'movie_create.html'
     model = Movie
     form_class = MovieModelForm
     success_url = reverse_lazy('movies')
+    permission_required = 'viewer.change_movie'
 
 
-class MovieDeleteView(DeleteView):
+class MovieDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'person_confirm_delete.html'  # TODO movie_confirm_delete.html
     model = Movie
     success_url = reverse_lazy('movies')
+    permission_required = 'viewer.delete_movie'
 
 
+@login_required
 def persons(request):
     persons_list = Person.objects.all()
     context = {'persons': persons_list}
@@ -338,7 +345,7 @@ class PersonForm(Form):
         return initial.capitalize()
 
 
-class PersonModelForm(ModelForm):
+class PersonModelForm(LoginRequiredMixin, ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -367,7 +374,7 @@ class PersonModelForm(ModelForm):
         return initial.capitalize()
 
 
-class PersonFormView(FormView):
+class PersonFormView(LoginRequiredMixin, FormView):
     template_name = 'person_create.html'
     form_class = PersonModelForm
     success_url = reverse_lazy('person_create')
@@ -389,33 +396,37 @@ class PersonFormView(FormView):
         return super().form_invalid(form)
 
 
-class PersonCreateView(CreateView):
+class PersonCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'person_create.html'
     form_class = PersonModelForm
     success_url = reverse_lazy('person_create')
+    permission_required = 'viewer.add_person'
 
     def form_invalid(self, form):
         LOGGER.warning('User provided invalid data.')
         return super().form_invalid(form)
 
 
-class PersonUpdateView(UpdateView):
+class PersonUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'person_create.html'
     model = Person
     form_class = PersonModelForm
     success_url = reverse_lazy('persons')
+    permission_required = 'viewer.change_person'
 
     def form_invalid(self, form):
         LOGGER.warning('User provided invalid data.')
         return super().form_invalid(form)
 
 
-class PersonDeleteView(DeleteView):
+class PersonDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'person_confirm_delete.html'
     model = Person
     success_url = reverse_lazy('persons')
+    permission_required = 'viewer.delete_person'
 
 
+@login_required
 def rate_movie(request):
     user = request.user
     if request.method == 'POST':
@@ -441,6 +452,7 @@ def rate_movie(request):
 
 
 # view pro přidávání komentářů
+@login_required
 def add_comment(request):
     user = request.user
     if request.method == 'POST':

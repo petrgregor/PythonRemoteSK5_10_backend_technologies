@@ -22,6 +22,9 @@
             <a href="{% url 'signup' %}"><button>Register</button></a>
             <a href="{% url 'login' %}"><button>Login</button></a>
         {% endif %}
+        {% if request.user.is_superuser %}
+            <a href="/admin/"><button>Admin</button></a>
+        {% endif %}
     </nav>
     <nav class="navContainer2">
         <a href="News.html"><button>News in Cinemas</button></a>
@@ -29,8 +32,12 @@
         <a href="{% url 'movies' %}"><button>Filmy</button></a>
         <a href="{% url 'persons' %}"><button>Herci a režiséři</button></a>
         {% if request.user.is_authenticated %}
+        {% if perms.viewer.add_movie %}
             <a href="{% url 'movie_create' %}"><button>Přidat film</button></a>
+        {% endif %}
+        {% if perms.viewer.add_person %}
             <a href="{% url 'person_create' %}"><button>Přidat osobu</button></a>
+        {% endif %}
         {% endif %}
     </nav>
     <main>

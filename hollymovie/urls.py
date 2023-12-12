@@ -19,22 +19,14 @@ from django.contrib.auth.views import LoginView
 from django.urls import path, include
 
 from accounts.views import SignUpView
+from viewer.admin import MovieAdmin
 from viewer.models import *
 from viewer.views import *
 
-admin.site.register(Country)
-admin.site.register(Genre)
-admin.site.register(Movie)
-admin.site.register(Rating)
-admin.site.register(Comment)
-admin.site.register(Image)
-admin.site.register(Person)
 
 # zde budeme vytvářet cesty
-
-
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),  # TODO: jak skrýt login?
 
     path('hello', hello),
     path('hello2/<s>', hello2),

@@ -7,7 +7,7 @@
         <li><a href="{% url 'movie' movie.id %}">{{ movie }}</a></li>
     {% endfor %}
 </ul>
-{% if request.user.is_authenticated %}
+{% if perms.viewer.add_movie %}
     <a href="{% url 'movie_create' %}"><button>Přidat film</button></a>
 {% endif %}
 {% endblock %}
