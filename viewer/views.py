@@ -193,7 +193,7 @@ def movie(request, pk):
         if Rating.objects.filter(movie=movie_obj, user=user).count() > 0:
             user_rating = Rating.objects.get(movie=movie_obj, user=user)
 
-    # TODO: komentáře k filmu
+    # komentáře k filmu
     comments = Comment.objects.filter(movie=movie_obj).order_by('-created')
 
     context = {'movie': movie_obj, 'avg_rating': avg_rating,
@@ -440,7 +440,7 @@ def rate_movie(request):
     return redirect(f"/movie/{movie_id}/")
 
 
-# TODO: view pro přidávání komentářů
+# view pro přidávání komentářů
 def add_comment(request):
     user = request.user
     if request.method == 'POST':

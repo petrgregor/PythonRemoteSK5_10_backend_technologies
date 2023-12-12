@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
+{% block title %}
+{{ movie.title_orig }}
+{% endblock %}
+
 {% block content %}
-<h1>{{ movie.title_orig }}</h1>
+<h1>{{ movie.title_orig|upper }}</h1>
 <div class="movie-details">
     <div class="movie-title-orig">Originální název: {{ movie.title_orig }}</div>
     <div class="movie-title-cz">Český název: {{ movie.title_cz }}</div>
@@ -38,7 +42,7 @@
     <div class="movie-video"><a href="{{ movie.video }}">Video</a></div>
     <div class="movie-avg-rating">Průměrné hodnocení:
         {% if avg_rating %}
-            {{ avg_rating.rating__avg }}
+            {{ avg_rating.rating__avg|floatformat:"0" }}
         {% else %}
             Dosud nehodnoceno
         {% endif %}
@@ -71,7 +75,7 @@
     </form>
     {% endif %}
 
-    <h3>Kommentare k filmu:</h3>
+    <h3>Komentáře k filmu:</h3>
     {% for comment in comments %}
         <p>
         {{ comment.comment }}
@@ -79,6 +83,8 @@
          <h6>{{ comment.created }}</h6>
         </p>
         <hr>
+    {% empty %}
+        Dosud žádný komentář.
     {% endfor %}
 
 </div>

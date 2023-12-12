@@ -15,7 +15,7 @@
   - [x] Herci -> ManyToMany(Person)
   - [x] Rok premiéry
   - [x] hodnocení -> FK(Hodnocení)
-  - komentáře -> FK(Hodnocení)
+  - [x] komentáře -> FK(Hodnocení)
   - obrázky -> FK(Obrázky)
   - [x] video -> url odkaz na youtube na trailer
   - [x] popis
@@ -23,10 +23,10 @@
   - [x] id filmu
   - [x] id uživatele
   - [x] hodnocení (hodnota 0-100 v %)
-- Komentáře
-  - id filmu
-  - id uživatele
-  - komentář
+- [x] Komentáře
+  - [x] id filmu
+  - [x] id uživatele
+  - [x] komentář
 - Obrázky
   - id filmu
   - obrázek (název souboru/image ?)
@@ -48,6 +48,6 @@
 - [x] zobrazit detail filmu
 - přihlášený uživatel může:
   - [x] hodnotit filmy
-  - komentovat filmy
+  - [x] komentovat filmy
 - admin může:
   - přidat/editovat/smazat film/herce/režiséra/žánr/země/komentáře
