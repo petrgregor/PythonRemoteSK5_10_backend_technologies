@@ -14,10 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import rest_framework
 from django.contrib import admin
 from django.contrib.auth.views import LoginView
 from django.urls import path, include
 
+import api
+from api.views import *
 from accounts.views import SignUpView
 from viewer.admin import MovieAdmin
 from viewer.models import *
@@ -68,4 +71,7 @@ urlpatterns = [
 
     path('rate_movie/', rate_movie, name='rate_movie'),
     path('add_comment', add_comment, name='add_comment'),
+
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/movies/', api.views.Movies.as_view()),
 ]

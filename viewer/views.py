@@ -1,3 +1,4 @@
+from datetime import datetime
 from logging import getLogger
 
 from django.contrib.auth.decorators import login_required
@@ -212,7 +213,7 @@ class MovieForm(Form):
     genres = ModelMultipleChoiceField(queryset=Genre.objects, widget=CheckboxSelectMultiple)
     directors = ModelMultipleChoiceField(queryset=Person.objects)
     actors = ModelMultipleChoiceField(queryset=Person.objects)
-    year = IntegerField(min_value=1900, max_value=2025)
+    year = IntegerField(min_value=1900, max_value=datetime.now().year + 3)
     video = CharField(max_length=128, required=False)
     description = CharField(widget=Textarea, required=False)
 
