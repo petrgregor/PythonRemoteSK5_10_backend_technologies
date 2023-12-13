@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import mixins, generics
 
-from api.serializers import MovieSerializer
+from api.serializers import *
 from viewer.models import Movie
 
 
@@ -15,3 +15,18 @@ class Movies(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPI
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+
+class MovieDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+                  generics.GenericAPIView):
+    queryset = Movie.objects.all()
+    serializer_class = MovieDetailSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)

@@ -50,7 +50,6 @@ def index(request):
 
 
 class GenreModelForm(ModelForm):
-
     class Meta:
         model = Genre
         fields = '__all__'
@@ -81,7 +80,6 @@ class GenreDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class CountryModelForm(ModelForm):
-
     class Meta:
         model = Country
         fields = '__all__'
@@ -131,14 +129,15 @@ def movies(request):
             context = {'movies': genre.movies_of_genre.all(), 'genres': genres, 'filtered_by': f'podle žánru {genre}'}
             return render(request, 'movies.html', context)
         else:
-            context = {'movies': [], 'genres': genres,  'filtered_by': ''}
+            context = {'movies': [], 'genres': genres, 'filtered_by': ''}
             return render(request, 'movies.html', context)
 
     if c != '':
         c = int(c)
         if Country.objects.filter(id=c).exists():
             country = Country.objects.get(id=c)
-            context = {'movies': country.movies_in_country.all(), 'genres': genres, 'filtered_by': f'podle země {country}'}
+            context = {'movies': country.movies_in_country.all(), 'genres': genres,
+                       'filtered_by': f'podle země {country}'}
             return render(request, 'movies.html', context)
         else:
             context = {'movies': [], 'genres': genres, 'filtered_by': ''}
@@ -146,7 +145,7 @@ def movies(request):
 
     movies_list = Movie.objects.all()
     genre_list = Genre.objects.all()
-    context = {'movies': movies_list, 'genres': genre_list,  'filtered_by': ''}
+    context = {'movies': movies_list, 'genres': genre_list, 'filtered_by': ''}
     return render(request, 'movies.html', context)
 
 
@@ -183,7 +182,10 @@ class MoviesListView(ListView):
 
 
 def movie(request, pk):
-    movie_obj = Movie.objects.get(id=pk)
+    try:
+        movie_obj = Movie.objects.get(id=pk)
+    except:
+        return render(request, 'index.html')  # TODO: vypsat na vyrenderované stránce chybu
 
     # spočítat průměrné hodnocení filmu
     avg_rating = None
@@ -227,7 +229,6 @@ class MovieForm(Form):
 
 
 class MovieModelForm(LoginRequiredMixin, ModelForm):
-
     class Meta:
         model = Movie
         fields = '__all__'
@@ -253,10 +254,10 @@ class MovieFormView(LoginRequiredMixin, FormView):
             title_orig=cleaned_data['title_orig'],
             title_cz=cleaned_data['title_cz'],
             title_sk=cleaned_data['title_sk'],
-            #countries=cleaned_data['countries'],
-            #genres=cleaned_data['genres'],
-            #directors=cleaned_data['directors'],
-            #actors=cleaned_data['actors'],
+            # countries=cleaned_data['countries'],
+            # genres=cleaned_data['genres'],
+            # directors=cleaned_data['directors'],
+            # actors=cleaned_data['actors'],
             year=cleaned_data['year'],
             video=cleaned_data['video'],
             description=cleaned_data['description']
@@ -320,6 +321,7 @@ def actor(request, pk):
     context = {'actor': actor_object}
     return render(request, 'person.html', context)
 
+
 # TODO: vytvořit CBV, která zvlášť zobrazí herce a zvlášť režiséry
 
 
@@ -361,8 +363,8 @@ class PersonModelForm(LoginRequiredMixin, ModelForm):
     class Meta:
         model = Person
         fields = '__all__'  # ve formuláři budou všechny atributy
-        #fields = ['last_name', 'first_name']  # ve formuláři se zobrazí pouze tyto atributy (v daném pořadí)
-        #exclude = ['biography']  # ve formuláři budou všechny atributy kromě těchto
+        # fields = ['last_name', 'first_name']  # ve formuláři se zobrazí pouze tyto atributy (v daném pořadí)
+        # exclude = ['biography']  # ve formuláři budou všechny atributy kromě těchto
 
     def clean_first_name(self):
         initial_data = super().clean()
@@ -447,7 +449,7 @@ def rate_movie(request):
                     user=user,
                     rating=rating
                 )
-        #else:
+        # else:
         #    return redirect(f"/movie/{movie_id}/")
     return redirect(f"/movie/{movie_id}/")
 
