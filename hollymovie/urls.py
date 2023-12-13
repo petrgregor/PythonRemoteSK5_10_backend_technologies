@@ -26,7 +26,7 @@ from viewer.views import *
 
 # zde budeme vytvářet cesty
 urlpatterns = [
-    path('admin/', admin.site.urls),  # TODO: jak skrýt login?
+    path('admin/', admin.site.urls),
 
     path('hello', hello),
     path('hello2/<s>', hello2),
