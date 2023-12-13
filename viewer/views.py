@@ -202,8 +202,11 @@ def movie(request, pk):
     # komentáře k filmu
     comments = Comment.objects.filter(movie=movie_obj).order_by('-created')
 
+    # obrázky k filmu
+    images = Image.objects.filter(movie=movie_obj)
+
     context = {'movie': movie_obj, 'avg_rating': avg_rating,
-               'user_rating': user_rating, 'comments': comments}
+               'user_rating': user_rating, 'comments': comments, 'images': images}
     return render(request, 'movie.html', context)
 
 

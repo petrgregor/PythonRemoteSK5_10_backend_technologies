@@ -7,6 +7,12 @@
 {% block content %}
 <h1>{{ movie.title_orig|upper }}</h1>
 <div class="movie-details">
+    <div class="images">
+        {% for image in images %}
+        <div class="image-container"><img src="{{ image.image }}"></div>
+        {% endfor %}
+    </div>
+
     <div class="movie-title-orig">Originální název: {{ movie.title_orig }}</div>
     <div class="movie-title-cz">Český název: {{ movie.title_cz }}</div>
     <div class="movie-title-sk">Slovenský název: {{ movie.title_sk }}</div>

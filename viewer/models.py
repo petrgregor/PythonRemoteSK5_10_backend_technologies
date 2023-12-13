@@ -2,7 +2,7 @@ from datetime import date
 
 from django.db import models
 from django.db.models import Model, CharField, IntegerField, TextField, DateField, ForeignKey, DO_NOTHING, \
-    ManyToManyField, SET_NULL, DateTimeField
+    ManyToManyField, SET_NULL, DateTimeField, ImageField
 from django.contrib.auth.models import User
 
 
@@ -48,6 +48,10 @@ class Person(Model):
             return (today.year - self.birth_date.year -
                     ((today.month, today.day) < (self.birth_date.month, self.birth_date.day)))
         return None
+
+
+# TODO: upravit ve výpisu u filmu pořadí herců dle priorit
+# Např. u Vykoupení z věznice Shawshank: Tim Robbins, Morgan Freeman, Bob Gunton
 
 
 class Movie(Model):
@@ -103,7 +107,8 @@ class Comment(Model):
 
 class Image(Model):
     movie = ForeignKey(Movie, on_delete=DO_NOTHING, null=False, blank=False)
-    url = CharField(max_length=128, null=False, blank=False)
+    #url = CharField(max_length=128, null=False, blank=False)
+    image = ImageField(upload_to='images/', default=None, null=False, blank=False)  #, height_field=None, width_field=None, max_length=500)
     description = TextField()
 
     def __str__(self):

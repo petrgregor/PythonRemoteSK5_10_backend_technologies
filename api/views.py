@@ -30,3 +30,16 @@ class MovieDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.Des
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+
+# TODO: API pro seznam všech lidí (Person) v databázi (viz Movies)
+
+# TODO: API pro detailní výpis jedné osoby (Person) z databáze (viz MovieDetail)
+
+# TODO: API pro seznam všech herců (Person) v databázi (viz Movies)
+
+# TODO: API pro detailní výpis jednoho herce (Person) z databáze (viz MovieDetail)
+
+# TODO: API pro seznam všech režisérů (Person) v databázi (viz Movies)
+
+# TODO: API pro detailní výpis jednoho režiséra (Person) z databáze (viz MovieDetail)
