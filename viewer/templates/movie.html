@@ -9,7 +9,7 @@
 <div class="movie-details">
     <div class="images">
         {% for image in images %}
-        <div class="image-container"><img src="{{ image.image }}"></div>
+        <div class="image-container"><img src="{{ image.image.url }}" width="150px"></div>
         {% endfor %}
     </div>
 
