@@ -32,9 +32,34 @@ class MovieDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.Des
         return self.destroy(request, *args, **kwargs)
 
 
-# TODO: API pro seznam všech lidí (Person) v databázi (viz Movies)
+# API pro seznam všech lidí (Person) v databázi (viz Movies)
+class PersonsList(mixins.ListModelMixin, generics.GenericAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
 
-# TODO: API pro detailní výpis jedné osoby (Person) z databáze (viz MovieDetail)
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+# API pro detailní výpis jedné osoby (Person) z databáze (viz MovieDetail)
+class PersonDetail(mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin,
+                   mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
 
 # TODO: API pro seznam všech herců (Person) v databázi (viz Movies)
 
