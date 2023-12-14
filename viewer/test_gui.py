@@ -86,3 +86,8 @@ class SignupTestWithSelenium(TestCase):
         time.sleep(2)
 
         assert 'Přihlášen jako: TestUser1' in selenium_webdriver.page_source
+
+
+# TODO: otestovat přidání nového filmu pomocí selenium
+
+# TODO: otestovat přidání nového člověka pomocí selenium

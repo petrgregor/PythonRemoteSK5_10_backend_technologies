@@ -5,7 +5,7 @@
   - [x] název
 - [x] Žánr
   - [x] název 
-- Filmy (Movie)
+- [x] Filmy (Movie)
   - [x] Originální název filmu
   - [x] Český název filmu
   - [x] Slovenský název filmu
@@ -16,7 +16,7 @@
   - [x] Rok premiéry
   - [x] hodnocení -> FK(Hodnocení)
   - [x] komentáře -> FK(Hodnocení)
-  - obrázky -> FK(Obrázky)
+  - [x] obrázky -> FK(Obrázky)
   - [x] video -> url odkaz na youtube na trailer
   - [x] popis
 - [x] Hodnocení
@@ -27,10 +27,10 @@
   - [x] id filmu
   - [x] id uživatele
   - [x] komentář
-- Obrázky
-  - id filmu
-  - obrázek (název souboru/image ?)
-  - popis
+- [x] Obrázky
+  - [x] id filmu
+  - [x] obrázek (ImageField)
+  - [x] popis
 - [x] Person
   - [x] Jméno
   - [x] Příjmení
@@ -46,8 +46,8 @@
   - [x] podle herce
   - [x] podle režiséra
 - [x] zobrazit detail filmu
-- přihlášený uživatel může:
+- [x] přihlášený uživatel může:
   - [x] hodnotit filmy
   - [x] komentovat filmy
-- admin může:
-  - přidat/editovat/smazat film/herce/režiséra/žánr/země/komentáře
+- [x] admin může:
+  - [x] přidat/editovat/smazat film/herce/režiséra/žánr/země/komentáře
