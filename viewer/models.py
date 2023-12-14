@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Country(Model):
-    name = CharField(max_length=64, null=False, blank=False)
+    name = CharField(max_length=64, null=False, blank=False, unique=True)
 
     class Meta:
         verbose_name_plural = "Countries"
@@ -18,7 +18,7 @@ class Country(Model):
 
 
 class Genre(Model):
-    name = CharField(max_length=32, null=False, blank=False)  # CharField => VARCHAR
+    name = CharField(max_length=32, null=False, blank=False, unique=True)  # CharField => VARCHAR
 
     class Meta:
         ordering = ['name']
@@ -41,7 +41,7 @@ class Person(Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
-    # TODO: metoda pro výpočet věku
+    # metoda pro výpočet věku
     def calculate_age(self):
         if self.birth_date:
             today = date.today()
