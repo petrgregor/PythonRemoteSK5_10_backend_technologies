@@ -9,10 +9,12 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, FormView, CreateView, UpdateView, DeleteView
+from django_addanother.views import CreatePopupMixin
+from django_addanother.widgets import AddAnotherWidgetWrapper
 
 from viewer.models import *
 from django.forms import Form, ModelChoiceField, Textarea, IntegerField, CharField, ModelMultipleChoiceField, \
-    CheckboxSelectMultiple, ModelForm, DateField, SelectDateWidget, DateInput
+    CheckboxSelectMultiple, ModelForm, DateField, SelectDateWidget, DateInput, SelectMultiple
 
 LOGGER = getLogger()
 
@@ -90,7 +92,7 @@ class CountryModelForm(ModelForm):
         return name
 
 
-class CountryCreateView(LoginRequiredMixin, CreateView):
+class CountryCreateView(LoginRequiredMixin, CreatePopupMixin, CreateView):
     template_name = 'movie_create.html'  # TODO country_create.html
     form_class = CountryModelForm
     success_url = reverse_lazy('index')
@@ -235,6 +237,13 @@ class MovieModelForm(LoginRequiredMixin, ModelForm):
     class Meta:
         model = Movie
         fields = '__all__'
+
+        widgets = {
+            'countries': AddAnotherWidgetWrapper(
+                SelectMultiple,
+                reverse_lazy('country_create')
+            )
+        }
 
     def clean_title_orig(self):
         initial_form = super().clean()

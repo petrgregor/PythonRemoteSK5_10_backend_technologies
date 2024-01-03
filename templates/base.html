@@ -9,37 +9,39 @@
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
-    <header class="headContainer">
-        <img class="headContainer-part" alt="Yoda1" src="{% static 'viewer/images/HD-wallpaper-jedi-yoda-star-wars-lightsbar-black-background-dark-theme.jpg' %}">
-        <a href="{% url 'index' %}"  class="headContainer-center"><h1>Endless Movie database</h1></a>
-        <img class="headContainer-part" alt="Yoda2" src="{% static 'viewer/images/wp7248743.webp' %}">
-    </header>
-    <nav class="navContainer">
-        {% if request.user.is_authenticated %}
-            Přihlášen jako: {{ request.user.username }}
-            <a href="{% url 'logout' %}"><button id="button-logout">Logout</button></a>
-        {% else %}
-            <a href="{% url 'signup' %}"><button id="button-signup">Register</button></a>
-            <a href="{% url 'login' %}"><button id="button-login">Login</button></a>
-        {% endif %}
-        {% if request.user.is_superuser %}
-            <a href="/admin/"><button>Admin</button></a>
-        {% endif %}
-    </nav>
-    <nav class="navContainer2">
-        <a href="News.html"><button>News in Cinemas</button></a>
-        <a href="NewsOnDVD.html"><button>News on DVD</button></a>
-        <a href="{% url 'movies' %}"><button>Filmy</button></a>
-        <a href="{% url 'persons' %}"><button>Herci a režiséři</button></a>
-        {% if request.user.is_authenticated %}
-        {% if perms.viewer.add_movie %}
-            <a href="{% url 'movie_create' %}"><button>Přidat film</button></a>
-        {% endif %}
-        {% if perms.viewer.add_person %}
-            <a href="{% url 'person_create' %}"><button>Přidat osobu</button></a>
-        {% endif %}
-        {% endif %}
-    </nav>
+    {% if not view.is_popup %}
+        <header class="headContainer">
+            <img class="headContainer-part" alt="Yoda1" src="{% static 'viewer/images/HD-wallpaper-jedi-yoda-star-wars-lightsbar-black-background-dark-theme.jpg' %}">
+            <a href="{% url 'index' %}"  class="headContainer-center"><h1>Endless Movie database</h1></a>
+            <img class="headContainer-part" alt="Yoda2" src="{% static 'viewer/images/wp7248743.webp' %}">
+        </header>
+        <nav class="navContainer">
+            {% if request.user.is_authenticated %}
+                Přihlášen jako: {{ request.user.username }}
+                <a href="{% url 'logout' %}"><button id="button-logout">Logout</button></a>
+            {% else %}
+                <a href="{% url 'signup' %}"><button id="button-signup">Register</button></a>
+                <a href="{% url 'login' %}"><button id="button-login">Login</button></a>
+            {% endif %}
+            {% if request.user.is_superuser %}
+                <a href="/admin/"><button>Admin</button></a>
+            {% endif %}
+        </nav>
+        <nav class="navContainer2">
+            <a href="News.html"><button>News in Cinemas</button></a>
+            <a href="NewsOnDVD.html"><button>News on DVD</button></a>
+            <a href="{% url 'movies' %}"><button>Filmy</button></a>
+            <a href="{% url 'persons' %}"><button>Herci a režiséři</button></a>
+            {% if request.user.is_authenticated %}
+                {% if perms.viewer.add_movie %}
+                    <a href="{% url 'movie_create' %}"><button>Přidat film</button></a>
+                {% endif %}
+                {% if perms.viewer.add_person %}
+                    <a href="{% url 'person_create' %}"><button>Přidat osobu</button></a>
+                {% endif %}
+            {% endif %}
+        </nav>
+    {% endif %}
     <main>
         {% block content %}{% endblock %}
     </main>

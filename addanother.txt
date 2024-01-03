@@ -1,0 +1,37 @@
+pip install django_addanother
+
+Do settings.py vložit do INSTALLED_APPS: 'django_addanother',
+
+Do views.py do MovieModelForm do podtřídy Meta přidáme:
+    widgets = {
+            'countries': AddAnotherWidgetWrapper(
+                SelectMultiple,
+                reverse_lazy('country_create')
+            )
+        }
+
+Do movie_create.html přidáme:
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+        <script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+        {{ form.media }}
+    </table>
+    <input type="submit" value="Submit" class="btn btn-submit">
+</form>
+{% endblock %}
+
+Do třídy class CountryCreateView(LoginRequiredMixin, CreatePopupMixin, CreateView):
+přidáme CreatePopupMixin
+from django_addanother.views import CreatePopupMixin
+
+Do šablony base.html přidáme:
+{% if not view.is_popup %}
+... hlavička a navigace
+{% endif %}
