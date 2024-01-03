@@ -222,3 +222,7 @@ p {
 .person-details {
     width: 80%;
 }
+
+.current-page {
+    background-color: darkgray;
+}

@@ -181,6 +181,7 @@ class MoviesTemplateView(TemplateView):
 class MoviesListView(ListView):
     template_name = 'movies2.html'
     model = Movie
+    paginate_by = 5
 
 
 def movie(request, pk):
