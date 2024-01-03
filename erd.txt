@@ -1,0 +1,15 @@
+Stáhnout: https://graphviz.org/download/
+
+pip install graphviz
+
+pip install django-extensions
+
+Přidat 'django_extensions', do setting.py do INSTALLED_APPS
+
+Do setting.py přidat nastavení grafu:
+GRAPH_MODELS = {
+    'all_applications': True,
+    'graph_models': True,
+}
+
+pip install pyparsing pydot
