@@ -245,6 +245,20 @@ class MovieModelForm(LoginRequiredMixin, ModelForm):
             )
         }
 
+        labels = {
+            'title_orig': 'Originální název'
+        }
+
+        help_texts = {
+            'title_orig': 'Zadejte originální název'
+        }
+
+        error_messages = {
+            'title_orig': {
+                'max_length': 'Zadaný název je příliš dlouhý'
+            }
+        }
+
     def clean_title_orig(self):
         initial_form = super().clean()
         initial = initial_form['title_orig'].strip()
