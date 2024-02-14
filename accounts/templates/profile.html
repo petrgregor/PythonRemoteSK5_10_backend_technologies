@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ profile }}</h1>
+<div class="profile-details">
+    <div class="profile-first-name">Jméno: {{ profile.first_name }}</div>
+    <div class="profile-last-name">Příjmení: {{ profile.last_name }}</div>
+    <div class="profile-birth-date">Datum narození: {{ profile.birth_date }} (věk: {{profile.calculate_age}})</div>
+    <div class="profile-biography">Biografie: {{ profile.biography }}</div>
+    {% if perms.accounts.change_profile %}
+        <a href="{% url 'profile_update' profile.id %}"><button>Upravit</button></a>
+    {% endif %}
+    {% if perms.accounts.delete_profile %}
+        <a href="{% url 'profile_delete' profile.id %}"><button>Smazat</button></a>
+    {% endif %}
+</div>
+{% endblock %}

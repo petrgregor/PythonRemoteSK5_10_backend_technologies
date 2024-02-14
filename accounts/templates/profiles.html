@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="actors-list">
+    <h1>Seznam profilů</h1>
+    <ul>
+        {% for profile in profiles %}
+            <li>
+                    {{ profile }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

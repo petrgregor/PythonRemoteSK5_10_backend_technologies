@@ -8,3 +8,8 @@ class Profile(Model):
     user = OneToOneField(User, on_delete=CASCADE)
     birth_date = DateField(null=True, blank=True)
     biography = TextField(null=True, blank=True)
+    #student
+    #employee
+
+    def __str__(self):
+        return f"{self.user}"

@@ -21,6 +21,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView
 from django.urls import path, include
 
+import accounts.views
 import api
 from api.views import *
 from accounts.views import SignUpView
@@ -60,7 +61,7 @@ urlpatterns = [
     path('movie/create/', MovieCreateView.as_view(), name='movie_create'),
     path('movie/update/<pk>/', MovieUpdateView.as_view(), name='movie_update'),
     path('movie/delete/<pk>/', MovieDeleteView.as_view(), name='movie_delete'),
-    path('movie/<pk>/', movie, name='movie'),
+    path('movie_detail/<pk>/', movie, name='movie'),
 
     #path('persons/', persons, name='persons'),
     #path('persons/', PersonsListView.as_view(), name='persons'),  # FIXME: zobrazit zvlášť herce a zvlášť režiséry
@@ -79,4 +80,8 @@ urlpatterns = [
     path('api/movie/<pk>/', api.views.MovieDetail.as_view()),
     path('api/persons/', api.views.PersonsList.as_view()),
     path('api/person/<pk>/', api.views.PersonDetail.as_view()),
+
+    path('profiles/', accounts.views.ProfileListView.as_view(), name='profiles'),
+    # path('profile/<pk>/', accounts.views.)
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

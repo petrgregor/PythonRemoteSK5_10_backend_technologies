@@ -478,7 +478,9 @@ def rate_movie(request):
                 )
         # else:
         #    return redirect(f"/movie/{movie_id}/")
-    return redirect(f"/movie/{movie_id}/")
+    #return redirect(f"/movie/{movie_id}/")
+    return redirect('movie', pk=movie_id)
+
 
 
 # view pro přidávání komentářů
@@ -495,4 +497,5 @@ def add_comment(request):
                 user=user,
                 comment=comment
             )
-    return redirect(f"/movie/{movie_id}")
+    #return redirect(f"/movie/{movie_id}")
+    return redirect('movie', pk=movie_id)
