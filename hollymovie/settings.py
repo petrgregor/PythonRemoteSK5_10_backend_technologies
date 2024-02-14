@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6!r_7^fyn$j-es3)d-u9@qo@wwd#_w&5=cxg#-19y1(h6^1%0!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', ".awsapprunner.com"]
 
 
 # Application definition
@@ -55,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 
     'hollymovie.middleware.AdminPagesMiddleware',
 ]
@@ -158,6 +160,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
 MEDIA_URL = 'images/'
@@ -173,4 +176,13 @@ LOGOUT_REDIRECT_URL = 'index'
 GRAPH_MODELS = {
     'all_applications': True,
     'graph_models': True,
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
 }
